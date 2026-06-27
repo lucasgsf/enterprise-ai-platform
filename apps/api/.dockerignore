@@ -1,0 +1,21 @@
+# Keep the build context small and reproducible.
+.venv/
+__pycache__/
+*.py[cod]
+
+# Test and tooling caches (dev-only, not needed in the image)
+tests/
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+
+# Local environment / secrets
+.env
+.env.*
+!.env.example
+
+# VCS / editor
+.git/
+.gitignore
+.idea/
+.vscode/
