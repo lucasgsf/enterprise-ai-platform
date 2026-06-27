@@ -3,9 +3,8 @@
 #
 #   docker compose up --build
 #
-# Note: the API does not use Postgres/Redis yet — wiring the database connection
-# (SQLAlchemy + Alembic) is the next foundation increment. They are included now
-# so the local stack is complete and dependencies are healthcheck-gated.
+# The API connects to Postgres via async SQLAlchemy and gates its own startup on
+# Postgres/Redis reporting healthy. Redis is not used by application code yet.
 
 services:
   api:
@@ -24,12 +23,13 @@ services:
       redis:
         condition: service_healthy
     healthcheck:
-      # Readiness probe: also exercises the database connection.
+      # Readiness probe: also exercises the database connection. Uses http.client so a
+      # 503 (not-ready) returns cleanly with exit 1 instead of raising a traceback.
       test:
         - CMD
         - python
         - -c
-        - "import urllib.request,sys; sys.exit(0 if urllib.request.urlopen('http://localhost:8000/health/ready').status == 200 else 1)"
+        - "import http.client,sys; c=http.client.HTTPConnection('localhost',8000,timeout=3); c.request('GET','/health/ready'); sys.exit(0 if c.getresponse().status == 200 else 1)"
       interval: 10s
       timeout: 3s
       retries: 5
