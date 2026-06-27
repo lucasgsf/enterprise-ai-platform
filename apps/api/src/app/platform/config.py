@@ -25,6 +25,10 @@ class Settings(BaseSettings):
     app_name: str = "Enterprise AI Platform API"
     environment: str = "development"
 
+    # Async SQLAlchemy URL. Defaults to the local Compose Postgres (published port);
+    # inside Compose the API overrides the host via APP_DATABASE_URL.
+    database_url: str = "postgresql+asyncpg://app:app@localhost:5432/app"
+
     @property
     def version(self) -> str:
         """Application version.
