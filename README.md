@@ -1,5 +1,7 @@
 # Enterprise AI Platform
 
+[![CI](https://github.com/lucasgsf/enterprise-ai-platform/actions/workflows/ci.yml/badge.svg)](https://github.com/lucasgsf/enterprise-ai-platform/actions/workflows/ci.yml)
+
 Corporate AI platform for **Acme Corporation** (a fictional company) — a portfolio
 project and learning lab for Generative AI, software architecture, and platform
 engineering.
