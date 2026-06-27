@@ -33,6 +33,23 @@ uv run uvicorn app.main:app --reload   # run the API at http://127.0.0.1:8000
 
 Check it: <http://127.0.0.1:8000/health> and the docs at `/docs`.
 
+## Health probes
+
+- `GET /health` — **liveness** (no dependencies).
+- `GET /health/ready` — **readiness** (runs `SELECT 1` against the database).
+
+## Database & migrations
+
+Async SQLAlchemy (asyncpg) + Alembic. Start a database first (`docker compose up -d
+postgres` from the repo root), then:
+
+```bash
+# from apps/api
+uv run alembic upgrade head      # apply migrations
+uv run alembic revision -m "add X"   # create a new migration (autogenerate-ready)
+uv run alembic downgrade -1       # roll back one revision
+```
+
 ## Quality
 
 ```bash
