@@ -1,23 +1,23 @@
 # Release 7 — MCP (Model Context Protocol)
 
-> **Status:** esboço leve
-> **Bounded context:** Integração externa
+> **Status:** light outline
+> **Bounded context:** External integration
 
-## Objetivo
-Integrar a plataforma a sistemas externos (GitHub, Jira, Slack fictícios da Acme) via
-**MCP**, padronizando como o modelo acessa contexto e ferramentas externas.
+## Goal
+Integrate the platform with external systems (Acme's fictional GitHub, Jira, Slack) via
+**MCP**, standardizing how the model accesses external context and tools.
 
-## Escopo
-- Cliente MCP na plataforma.
-- Um ou mais **MCP servers** expondo recursos/tools da Acme.
-- Mapear tools MCP para o loop de tool calling do R6.
+## Scope
+- MCP client in the platform.
+- One or more **MCP servers** exposing Acme resources/tools.
+- Map MCP tools to the R6 tool-calling loop.
 
-## Conceitos-chave a explicar antes de implementar
-O que é MCP e que problema resolve; servers vs clients; resources vs tools vs prompts
-no MCP; MCP vs tool calling "nativo"; segurança na fronteira externa.
+## Key concepts to explain before implementing
+What MCP is and what problem it solves; servers vs clients; resources vs tools vs
+prompts in MCP; MCP vs "native" tool calling; security at the external boundary.
 
-## Critério de "pronto"
-- [ ] Plataforma consome um MCP server e usa suas tools no chat/agente.
+## Definition of Done
+- [ ] Platform consumes an MCP server and uses its tools in chat/agent.
 
-## Depende de
+## Depends on
 R6 (tool calling).

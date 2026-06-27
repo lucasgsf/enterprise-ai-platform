@@ -1,28 +1,27 @@
 # Release 6 — Tool Calling
 
-> **Status:** esboço leve
+> **Status:** light outline
 > **Bounded context:** Tooling
 
-## Objetivo
-Permitir que o LLM invoque ferramentas/funções da plataforma de forma controlada e
-segura.
+## Goal
+Let the LLM invoke platform tools/functions in a controlled and safe way.
 
-## Escopo
-- Definição de tools (schema) e registro.
-- Loop de tool calling (modelo pede → executa → devolve resultado).
-- **Guardrails** iniciais: validação de entrada/saída, allowlist de tools.
-- Primeiras defesas contra **prompt injection**.
+## Scope
+- Tool definition (schema) and registration.
+- Tool-calling loop (model requests → execute → return result).
+- Initial **guardrails**: input/output validation, tool allowlist.
+- First defenses against **prompt injection**.
 
-## Conceitos-chave a explicar antes de implementar
-Function/tool calling; JSON schema de tools; loop ReAct simplificado; guardrails de
-entrada/saída; superfície de ataque de prompt injection; princípio do menor privilégio.
+## Key concepts to explain before implementing
+Function/tool calling; tool JSON schema; simplified ReAct loop; input/output
+guardrails; prompt injection attack surface; principle of least privilege.
 
-## Critério de "pronto"
-- [ ] LLM invoca uma tool real e usa o resultado na resposta.
-- [ ] Tools inválidas/perigosas são bloqueadas por guardrails.
+## Definition of Done
+- [ ] LLM invokes a real tool and uses the result in its response.
+- [ ] Invalid/dangerous tools are blocked by guardrails.
 
-## Depende de
-R4 (gateway com suporte a tool calling).
+## Depends on
+R4 (gateway with tool-calling support).
 
 ## Cross-cutting
-Guardrails e prompt injection começam aqui e são reforçados no R9.
+Guardrails and prompt injection start here and are reinforced in R9.

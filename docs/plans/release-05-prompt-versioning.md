@@ -1,25 +1,25 @@
 # Release 5 — Prompt Versioning
 
-> **Status:** esboço leve
+> **Status:** light outline
 > **Bounded context:** Prompt Management
 
-## Objetivo
-Tratar prompts como artefatos versionados (não strings soltas no código), permitindo
-evolução controlada e rollback.
+## Goal
+Treat prompts as versioned artifacts (not loose strings in code), enabling controlled
+evolution and rollback.
 
-## Escopo
-- Registry de prompts com versões e metadados.
-- Renderização de templates com variáveis (tipadas).
-- Estratégia de rollout (qual versão está ativa por ambiente/uso).
-- Histórico e comparação entre versões.
+## Scope
+- Prompt registry with versions and metadata.
+- Template rendering with (typed) variables.
+- Rollout strategy (which version is active per environment/usage).
+- History and comparison between versions.
 
-## Conceitos-chave a explicar antes de implementar
-Prompt como código vs como dado; templating seguro; versionamento semântico de
-prompts; A/B de prompts; relação com avaliação (R11).
+## Key concepts to explain before implementing
+Prompt as code vs as data; safe templating; semantic versioning of prompts; prompt A/B
+testing; relationship with evaluation (R11).
 
-## Critério de "pronto"
-- [ ] Prompts versionados e referenciados por id+versão.
-- [ ] Trocar versão ativa sem deploy de código.
+## Definition of Done
+- [ ] Prompts versioned and referenced by id+version.
+- [ ] Switch the active version without a code deploy.
 
-## Depende de
-R4 (prompts alimentam o gateway).
+## Depends on
+R4 (prompts feed the gateway).

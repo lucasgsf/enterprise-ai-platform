@@ -1,93 +1,92 @@
 # Roadmap — Enterprise AI Platform (Acme Corporation)
 
-> Índice mestre do projeto. Este documento dá a visão macro dos 12 releases.
-> Cada release tem (ou terá) seu próprio plano em `docs/plans/release-NN-*.md`.
+> Master index for the project. This document gives the macro view of the 12 releases.
+> Each release has (or will have) its own plan in `docs/plans/release-NN-*.md`.
 
 ---
 
-## Filosofia de planejamento: camadas (just-in-time)
+## Planning philosophy: layered (just-in-time)
 
-Não escrevemos 12 planos detalhados de uma vez. Por quê?
+We do not write 12 detailed plans up front. Why?
 
-- **Planejamento prematuro envelhece mal.** Decisões concretas tomadas hoje para o
-  Release 9 estarão erradas quando chegarmos lá, porque o que aprendemos nos
-  releases anteriores muda o desenho dos posteriores.
-- **Custo de manutenção.** Documento detalhado e desatualizado é pior que documento
-  ausente.
+- **Premature planning ages badly.** Concrete decisions made today for Release 9 will
+  be wrong by the time we get there, because what we learn in earlier releases
+  reshapes the design of the later ones.
+- **Maintenance cost.** A detailed, out-of-date document is worse than no document.
 
-Por isso, a profundidade dos planos é **em camadas**:
+So plan depth is **layered**:
 
-| Camada | Documento | Profundidade |
-|--------|-----------|--------------|
-| Macro | `00-roadmap.md` (este) | Índice mestre |
-| Próximo passo | `release-01-*.md` | **Detalhado** |
-| Futuro | `release-02..12-*.md` | Esboço leve, aprofundado no momento certo |
+| Layer | Document | Depth |
+|-------|----------|-------|
+| Macro | `00-roadmap.md` (this one) | Master index |
+| Next step | `release-01-*.md` | **Detailed** |
+| Future | `release-02..12-*.md` | Light outline, deepened at the right time |
 
-**Regra prática:** ao iniciar um release, seu esboço é promovido a plano detalhado
-(seguindo o fluxo brainstorming → spec → plano do `AI_CONTEXT.md`).
-
----
-
-## Decisão arquitetural central: Monólito Modular
-
-A plataforma começa como **um único aplicativo FastAPI**, organizado em **módulos com
-fronteiras de domínio explícitas** (bounded contexts internos). **Não** começamos com
-microsserviços.
-
-**Por quê (resumo — detalhe em `release-01`):**
-- Foco no aprendizado de **IA**, não em encanamento distribuído (rede, consistência
-  eventual, observabilidade distribuída).
-- Refatorar fronteiras dentro de um monólito é barato; quebrar serviços cedo demais
-  e errar a fronteira é caro.
-- As fronteiras são desenhadas para permitir **extração futura** de serviços via
-  RabbitMQ/eventos, *quando e se* houver dor real de escala.
-
-Cada release abaixo corresponde, em geral, a **um bounded context**.
+**Rule of thumb:** when a release starts, its outline is promoted to a detailed plan
+(following the brainstorming → spec → plan flow from `AI_CONTEXT.md`).
 
 ---
 
-## Stack confirmada
+## Central architectural decision: Modular Monolith
 
-| Camada | Tecnologia | Status |
-|--------|-----------|--------|
-| Backend | Python **3.12** + FastAPI + Pydantic + SQLAlchemy (async) | ✅ definido |
-| Tooling Python | **uv** (deps + venv + execução) | ✅ definido |
-| Frontend | **Next.js** + TypeScript (BFF para SSO + SSR/streaming) | ✅ definido |
-| Banco relacional | PostgreSQL | ✅ definido |
-| Cache / filas leves | Redis | ✅ definido |
-| Mensageria | RabbitMQ | quando houver extração de serviços |
-| Banco vetorial | pgvector → Qdrant | Release 8 |
+The platform starts as **a single FastAPI application**, organized into **modules with
+explicit domain boundaries** (internal bounded contexts). We do **not** start with
+microservices.
+
+**Why (summary — full detail in `release-01`):**
+- Focus on learning **AI**, not distributed plumbing (networking, eventual
+  consistency, distributed observability).
+- Refactoring boundaries inside a monolith is cheap; splitting services too early and
+  getting the boundary wrong is expensive.
+- Boundaries are designed to allow **future extraction** into services via
+  RabbitMQ/events, *when and if* there is real scaling pain.
+
+Each release below generally corresponds to **one bounded context**.
+
+---
+
+## Confirmed stack
+
+| Layer | Technology | Status |
+|-------|-----------|--------|
+| Backend | Python **3.12** + FastAPI + Pydantic + SQLAlchemy (async) | ✅ decided |
+| Python tooling | **uv** (deps + venv + execution) | ✅ decided |
+| Frontend | **Next.js** + TypeScript (BFF for SSO + SSR/streaming) | ✅ decided |
+| Relational DB | PostgreSQL | ✅ decided |
+| Cache / light queues | Redis | ✅ decided |
+| Messaging | RabbitMQ | when services are extracted |
+| Vector store | pgvector → Qdrant | Release 8 |
 | Containers | Docker / Docker Compose → Kubernetes | R1 / R12 |
 
 ---
 
-## Os 12 releases
+## The 12 releases
 
-| # | Release | Bounded Context | Aprende-se | Depende de |
-|---|---------|-----------------|------------|------------|
-| 1 | Arquitetura & Fundação | Plataforma / Infra base | C4, monólito modular, FastAPI, uv, Docker, CI | — |
-| 2 | Autenticação & RBAC | Identidade & Acesso | OAuth/OIDC, SSO via BFF, RBAC, JWT | R1 |
-| 3 | Chat & Streaming | Conversação | SSE/streaming de tokens, histórico, persistência | R1, R2 |
-| 4 | Gateway de LLMs | Model Gateway | Abstração multi-provider, model routing, cost tracking | R3 |
-| 5 | Prompt Versioning | Prompt Management | Versionamento, registry de prompts, rollout | R4 |
-| 6 | Tool Calling | Tooling | Function/tool calling, guardrails, validação | R4 |
-| 7 | MCP | Integração externa | Model Context Protocol, servers/clients MCP | R6 |
-| 8 | RAG & Banco Vetorial | Knowledge | Embeddings, chunking, retrieval, hybrid search, reranking | R4 |
-| 9 | Agentes | Orquestração | LangGraph, memory, planning, reflection, human-in-the-loop | R6, R8 |
-| 10 | Observabilidade | Cross-cutting | OpenTelemetry, Langfuse, tracing de LLM, cost tracking | R4+ |
-| 11 | Avaliação | Quality | DeepEval, Ragas, eval de RAG e agentes | R8, R9 |
-| 12 | Deploy Kubernetes | Plataforma / Infra | Terraform, K8s, manifests, escalonamento | todos |
+| # | Release | Bounded Context | What you learn | Depends on |
+|---|---------|-----------------|----------------|------------|
+| 1 | Architecture & Foundation | Platform / Base infra | C4, modular monolith, FastAPI, uv, Docker, CI | — |
+| 2 | Authentication & RBAC | Identity & Access | OAuth/OIDC, SSO via BFF, RBAC, JWT | R1 |
+| 3 | Chat & Streaming | Conversation | SSE/token streaming, history, persistence | R1, R2 |
+| 4 | LLM Gateway | Model Gateway | Multi-provider abstraction, model routing, cost tracking | R3 |
+| 5 | Prompt Versioning | Prompt Management | Versioning, prompt registry, rollout | R4 |
+| 6 | Tool Calling | Tooling | Function/tool calling, guardrails, validation | R4 |
+| 7 | MCP | External integration | Model Context Protocol, MCP servers/clients | R6 |
+| 8 | RAG & Vector Store | Knowledge | Embeddings, chunking, retrieval, hybrid search, reranking | R4 |
+| 9 | Agents | Orchestration | LangGraph, memory, planning, reflection, human-in-the-loop | R6, R8 |
+| 10 | Observability | Cross-cutting | OpenTelemetry, Langfuse, LLM tracing, cost tracking | R4+ |
+| 11 | Evaluation | Quality | DeepEval, Ragas, RAG and agent evaluation | R8, R9 |
+| 12 | Kubernetes Deployment | Platform / Infra | Terraform, K8s, manifests, scaling | all |
 
-> **Cross-cutting (atravessam vários releases):** Guardrails e Prompt Injection
-> (começam no R6, reforçados no R9), Cost Tracking (R4, consolidado no R10),
-> Model Routing (R4, refinado no R10).
+> **Cross-cutting (span several releases):** Guardrails and Prompt Injection (start in
+> R6, reinforced in R9), Cost Tracking (R4, consolidated in R10), Model Routing (R4,
+> refined in R10).
 
 ---
 
-## Como navegar
+## How to navigate
 
-1. Comece sempre pelo plano do release **atual**.
-2. Ao concluir um release, faça uma **revisão** e promova o esboço do próximo a
-   plano detalhado.
-3. Mantenha este roadmap como fonte de verdade da visão macro — atualize a coluna
-   "Status" e dependências conforme a realidade muda.
+1. Always start from the **current** release's plan.
+2. When a release is done, run a **review** and promote the next outline to a detailed
+   plan.
+3. Keep this roadmap as the source of truth for the macro view — update the "Status"
+   column and dependencies as reality changes.

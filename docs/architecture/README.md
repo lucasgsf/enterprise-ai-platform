@@ -1,36 +1,36 @@
-# Arquitetura
+# Architecture
 
-Esta pasta contém a **arquitetura no papel** da Enterprise AI Platform.
+This folder holds the **architecture on paper** for the Enterprise AI Platform.
 
-## Estrutura
+## Structure
 
 ```
 architecture/
-  decisions/   ← ADRs (Architecture Decision Records), formato MADR
-  c4/          ← diagramas C4 (Contexto, Contêineres, Componentes)
+  decisions/   ← ADRs (Architecture Decision Records), MADR format
+  c4/          ← C4 diagrams (Context, Containers, Components)
 ```
 
 ## ADRs — Architecture Decision Records
 
-Cada decisão arquitetural relevante vira um arquivo `ADR-NNNN-titulo.md` em
-`decisions/`. Regras:
+Each relevant architectural decision becomes an `ADR-NNNN-title.md` file under
+`decisions/`. Rules:
 
-- **Um ADR por decisão.**
-- **Imutáveis:** não editamos a decisão depois de aceita. Se mudarmos de ideia,
-  criamos um novo ADR com status `Aceito` que **supersede** o anterior (que passa a
-  `Substituído por ADR-XXXX`).
-- **Numeração sequencial**, começando em `0001`.
-- Formato: **MADR** (Markdown Any Decision Record) simplificado — Contexto, Opções,
-  Decisão, Consequências.
+- **One ADR per decision.**
+- **Immutable:** we do not edit a decision after it is accepted. If we change our mind,
+  we create a new ADR with status `Accepted` that **supersedes** the previous one
+  (which moves to `Superseded by ADR-XXXX`).
+- **Sequential numbering**, starting at `0001`.
+- Format: **MADR** (Markdown Any Decision Record), simplified — Context, Options,
+  Decision, Consequences.
 
-Status possíveis: `Proposto`, `Aceito`, `Rejeitado`, `Substituído`, `Obsoleto`.
+Possible statuses: `Proposed`, `Accepted`, `Rejected`, `Superseded`, `Deprecated`.
 
 ## C4
 
-Diagramas em 4 níveis de zoom (usamos os 3 primeiros, conforme necessário):
+Diagrams at 4 zoom levels (we use the first 3 as needed):
 
-1. **Contexto** — sistema + usuários + sistemas externos.
-2. **Contêineres** — apps e bancos executáveis.
-3. **Componentes** — módulos dentro de um contêiner.
+1. **Context** — system + users + external systems.
+2. **Containers** — executable apps and databases.
+3. **Components** — modules inside a container.
 
-Diagramas escritos em **Mermaid** para renderizarem direto no GitHub.
+Diagrams are written in **Mermaid** so they render directly on GitHub.

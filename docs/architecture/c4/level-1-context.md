@@ -1,55 +1,55 @@
-# C4 — Nível 1: Diagrama de Contexto
+# C4 — Level 1: Context Diagram
 
-> Visão mais ampla: **quem** usa a plataforma e com **quais sistemas externos** ela
-> conversa. Sem detalhes internos — esses vêm no Nível 2 (Contêineres).
+> Broadest view: **who** uses the platform and **which external systems** it talks to.
+> No internal detail — that comes in Level 2 (Containers).
 
-## Diagrama
+## Diagram
 
 ```mermaid
 C4Context
-    title Contexto - Enterprise AI Platform (Acme Corporation)
+    title Context - Enterprise AI Platform (Acme Corporation)
 
-    Person(funcionario, "Funcionário Acme", "Usuário interno: analista, gestor, suporte. Interage com IA sobre dados corporativos.")
-    Person(admin, "Administrador", "Gerencia papéis, prompts e configurações da plataforma.")
+    Person(employee, "Acme Employee", "Internal user: analyst, manager, support. Interacts with AI over corporate data.")
+    Person(admin, "Administrator", "Manages roles, prompts, and platform configuration.")
 
-    System(plataforma, "Enterprise AI Platform", "Plataforma corporativa de IA: chat, RAG, agentes e ferramentas sobre os dados da Acme.")
+    System(platform, "Enterprise AI Platform", "Corporate AI platform: chat, RAG, agents, and tools over Acme data.")
 
-    System_Ext(llms, "Provedores de LLM", "OpenAI, Anthropic, Gemini, Llama. Geração de texto e embeddings.")
-    System_Ext(acme_sys, "Sistemas Acme", "ERP, CRM, Financeiro, RH, Compras, Projetos (dados fictícios).")
-    System_Ext(devtools, "Ferramentas externas", "GitHub, Jira, Slack — acessados via MCP (Release 7).")
-    System_Ext(idp, "Provedor de Identidade", "OAuth2/OIDC para SSO corporativo (Release 2).")
+    System_Ext(llms, "LLM Providers", "OpenAI, Anthropic, Gemini, Llama. Text generation and embeddings.")
+    System_Ext(acme_sys, "Acme Systems", "ERP, CRM, Finance, HR, Procurement, Projects (fictional data).")
+    System_Ext(devtools, "External Tools", "GitHub, Jira, Slack — accessed via MCP (Release 7).")
+    System_Ext(idp, "Identity Provider", "OAuth2/OIDC for corporate SSO (Release 2).")
 
-    Rel(funcionario, plataforma, "Usa", "HTTPS")
-    Rel(admin, plataforma, "Administra", "HTTPS")
-    Rel(plataforma, idp, "Autentica usuários", "OIDC")
-    Rel(plataforma, llms, "Envia prompts / recebe respostas e embeddings", "HTTPS/API")
-    Rel(plataforma, acme_sys, "Lê dados corporativos para contexto", "API/DB")
-    Rel(plataforma, devtools, "Integra ferramentas", "MCP")
+    Rel(employee, platform, "Uses", "HTTPS")
+    Rel(admin, platform, "Administers", "HTTPS")
+    Rel(platform, idp, "Authenticates users", "OIDC")
+    Rel(platform, llms, "Sends prompts / receives responses and embeddings", "HTTPS/API")
+    Rel(platform, acme_sys, "Reads corporate data for context", "API/DB")
+    Rel(platform, devtools, "Integrates tools", "MCP")
 
     UpdateLayoutConfig($c4ShapeInRow="3", $c4BoundaryInRow="1")
 ```
 
-## Leitura do diagrama
+## Reading the diagram
 
-- **Atores (Person):** os usuários internos da Acme. Não há usuário anônimo da
-  internet — a plataforma é **interna e autenticada**. (Por isso SEO é irrelevante e
-  a escolha de Next.js se justifica por SSO/BFF e streaming, não por indexação.)
-- **Sistema central:** a Enterprise AI Platform — a caixa que vamos construir.
-- **Sistemas externos:**
-  - **Provedores de LLM** — fonte da capacidade de IA (texto e embeddings).
-  - **Sistemas Acme** — de onde vêm os dados corporativos (contexto para RAG).
-  - **Ferramentas externas** — GitHub/Jira/Slack via MCP (Release 7).
-  - **Provedor de Identidade** — habilita o SSO (Release 2).
+- **Actors (Person):** Acme's internal users. There is no anonymous internet user —
+  the platform is **internal and authenticated**. (This is why SEO is irrelevant, and
+  why the Next.js choice is justified by SSO/BFF and streaming, not by indexing.)
+- **Central system:** the Enterprise AI Platform — the box we are going to build.
+- **External systems:**
+  - **LLM Providers** — source of the AI capability (text and embeddings).
+  - **Acme Systems** — where corporate data comes from (context for RAG).
+  - **External Tools** — GitHub/Jira/Slack via MCP (Release 7).
+  - **Identity Provider** — enables SSO (Release 2).
 
-## Fronteiras e responsabilidades
+## Boundaries and responsibilities
 
-A plataforma é a **única** dona da orquestração de IA. Os sistemas externos são
-*fornecedores* (LLMs, identidade) ou *fontes de dados* (sistemas Acme). Nenhum
-sistema externo conhece os detalhes internos da plataforma — toda integração passa
-por contratos bem definidos (API, OIDC, MCP).
+The platform is the **sole** owner of AI orchestration. External systems are either
+*providers* (LLMs, identity) or *data sources* (Acme systems). No external system knows
+the platform's internals — every integration goes through well-defined contracts (API,
+OIDC, MCP).
 
-## Próximo nível
+## Next level
 
-O **Nível 2 (Contêineres)** abrirá a caixa "Enterprise AI Platform" em: Frontend
-Next.js (UI + BFF), API FastAPI (o monólito modular), PostgreSQL e Redis. Será
-desenhado como parte das tarefas de arquitetura do Release 1.
+**Level 2 (Containers)** will open the "Enterprise AI Platform" box into: Next.js
+frontend (UI + BFF), FastAPI API (the modular monolith), PostgreSQL, and Redis. It will
+be drawn as part of the Release 1 architecture tasks.

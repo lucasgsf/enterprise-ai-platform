@@ -1,36 +1,37 @@
 # Enterprise AI Platform
 
-Plataforma corporativa de IA da **Acme Corporation** (empresa fictícia) — um projeto
-de portfólio e laboratório de aprendizado em IA Generativa, arquitetura de software e
-engenharia de plataformas.
+Corporate AI platform for **Acme Corporation** (a fictional company) — a portfolio
+project and learning lab for Generative AI, software architecture, and platform
+engineering.
 
-> Este projeto **não** é um MVP nem um tutorial. O objetivo é representar uma
-> aplicação que poderia existir em uma empresa real, demonstrando domínio de
-> arquitetura, IA Generativa, cloud e boas práticas de engenharia.
+> This project is **not** an MVP or a tutorial. The goal is to represent an
+> application that could exist in a real company, demonstrating mastery of
+> architecture, Generative AI, cloud, and engineering best practices.
 
 ## Stack
 
-| Camada | Tecnologia |
-|--------|-----------|
+| Layer | Technology |
+|-------|-----------|
 | Backend | Python 3.12 · FastAPI · Pydantic · SQLAlchemy (async) · uv |
-| Frontend | Next.js · TypeScript (BFF para SSO + streaming) |
-| Dados | PostgreSQL (+ pgvector) · Redis |
+| Frontend | Next.js · TypeScript (BFF for SSO + streaming) |
+| Data | PostgreSQL (+ pgvector) · Redis |
 | Infra | Docker · Docker Compose → Kubernetes · Terraform |
-| IA | OpenAI · Anthropic · Gemini · Llama · LangGraph · MCP · RAG |
+| AI | OpenAI · Anthropic · Gemini · Llama · LangGraph · MCP · RAG |
 
-## Arquitetura
+## Architecture
 
-Estilo inicial: **monólito modular** (ver
-[ADR-0001](docs/architecture/decisions/ADR-0001-monolito-modular.md)).
+Initial style: **modular monolith** (see
+[ADR-0001](docs/architecture/decisions/ADR-0001-modular-monolith.md)).
 
-- 📐 Decisões e diagramas: [`docs/architecture/`](docs/architecture/)
-- 🗺️ Roadmap e planos: [`docs/plans/`](docs/plans/)
+- 📐 Decisions and diagrams: [`docs/architecture/`](docs/architecture/)
+- 🗺️ Roadmap and plans: [`docs/plans/`](docs/plans/)
 
-O projeto evolui em **12 releases**, cada um correspondendo a um *bounded context*.
-Veja o [roadmap](docs/plans/00-roadmap.md).
+The project evolves across **12 releases**, each one mapping to a *bounded context*.
+See the [roadmap](docs/plans/00-roadmap.md).
 
-## Como contribuir (workflow)
+## Contributing (workflow)
 
-- **Branching:** GitHub Flow — `main` sempre estável; feature/release em branch → PR.
+- **Branching:** GitHub Flow — `main` always stable; feature/release work in a
+  branch → PR.
 - **Commits:** [Conventional Commits](https://www.conventionalcommits.org/)
   (`feat:`, `fix:`, `docs:`, `chore:`, `refactor:`...).
